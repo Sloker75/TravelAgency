@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.Models
+﻿namespace Domain.Models
 {
     public class Tour
     {
@@ -15,8 +9,9 @@ namespace Domain.Models
         public int CountPeople { get; set; }
 
         public List<Comment> Comments { get; set; }
-        public HotelAddress Address { get; set; }
+        public Hotel Hotel { get; set; }
         public List<Excursion> Excursions { get; set; }
+        public List<Reserve> Reserves { get; set; }
 
     }
 }

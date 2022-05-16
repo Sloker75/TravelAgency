@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.Models
+﻿namespace Domain.Models
 {
     public class Excursion
     {
@@ -14,7 +8,7 @@ namespace Domain.Models
         public double Price { get; set; }
         public DateTime ExcursionTime { get; set; }
 
-        public List<Tour> Tours { get; set; }
-        public int MyProperty { get; set; }
+        public Tour Tour { get; set; }
+        public List<ShowPlace> ShowPlaces { get; set; }
     }
 }
