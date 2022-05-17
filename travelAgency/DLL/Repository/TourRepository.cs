@@ -34,13 +34,13 @@ namespace DLL.Repository
             oldTour.Employee = newTour.Employee;
 
             base._travelAgency.Entry(oldTour).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            base._travelAgency.SaveChangesAsync();
+            await base._travelAgency.SaveChangesAsync();
         }
 
         public async Task DeleteTourAsync(int remTourId)
         {
             Entities.Remove(Entities.Find(remTourId));
-            base._travelAgency.SaveChangesAsync();
+            await base._travelAgency.SaveChangesAsync();
         }
 
         public async override Task<IReadOnlyCollection<Tour>> FindByConditionAsync(Expression<Func<Tour, bool>> predicat)

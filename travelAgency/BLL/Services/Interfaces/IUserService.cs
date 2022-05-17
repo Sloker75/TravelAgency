@@ -8,7 +8,6 @@ namespace BLL.Services.Interfaces
 {
     public interface IUserService
     {
-        Task AddReserveAsync(int userId, int tourId);
-        Task DeleteReserveAsync(int remReserveId, int userId);
+        Task DeleteReserveAsync(int remReserveId, string userId);
     }
 }

@@ -8,6 +8,6 @@ namespace DLL.Repository.Interfaces
 {
     public interface IUserRepository
     {
-        Task DeleteReserveAsync(int remReserveId, int userId);
+        Task DeleteReserveAsync(int remReserveId, string userId);
     }
 }

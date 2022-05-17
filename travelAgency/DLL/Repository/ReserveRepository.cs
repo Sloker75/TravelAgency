@@ -18,23 +18,16 @@ namespace DLL.Repository
 
         }
 
-        public async Task AddReserveAsync(string userId, int tourId, Reserve reserve)
+        public async Task AddReserveAsync(string userId, int tourId)
         {
             var user = base._travelAgency.Users.Find(userId);
             var tour = base._travelAgency.Tours.Find(tourId);
-
-            tour.Reserves.Add(reserve);
-            user.Reserves.Add(reserve);
-            base._travelAgency.Entry(tour).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            base._travelAgency.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            await base._travelAgency.SaveChangesAsync();
-
-            //var bookingTime = DateTime.Now;
-            //if (user != null && tour != null)
-            //{
-            //    Entities.AddAsync(new Reserve() {BookingTime = bookingTime, TourReserve = tour, UserReserve = user });
-            //    await base._travelAgency.SaveChangesAsync();
-            //}
+            var bookingTime = DateTime.Now;
+            if (user != null && tour != null)
+            {
+                await Entities.AddAsync(new Reserve() { BookingTime = bookingTime, TourReserve = tour, UserReserve = user });
+                await base._travelAgency.SaveChangesAsync();
+            }
 
         }
 
