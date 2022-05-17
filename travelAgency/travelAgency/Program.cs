@@ -13,7 +13,8 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 var identityBuilder = builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true);
 
-Configuration.ConfigurationService(builder.Services, connectionString, identityBuilder);
+BLL.Infrastructure.Configuration.ConfigurationService(builder.Services, connectionString, identityBuilder);
+travelAgency.Infrastructure.Configuration.ConfigurationService(identityBuilder);
 
 builder.Services.AddControllersWithViews();
 

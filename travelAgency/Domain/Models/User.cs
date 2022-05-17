@@ -9,5 +9,6 @@ namespace Domain.Models
         public string PhotoPath { get; set; }
 
         public List<Reserve> Reserves { get; set; }
+        public Employee Employee { get; set; }
     }
 }

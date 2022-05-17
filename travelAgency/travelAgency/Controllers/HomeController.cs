@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BLL.Services;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using travelAgency.Models;
 
@@ -7,15 +8,17 @@ namespace travelAgency.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly TourService _tourService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, TourService tourService)
         {
             _logger = logger;
+            this._tourService = tourService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            return View( await _tourService.FindByConditionAsync(x=>x.Id<10));
         }
 
         public IActionResult Privacy()

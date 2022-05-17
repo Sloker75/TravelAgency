@@ -2,6 +2,10 @@
 {
     public class ShowPlace
     {
+        public ShowPlace()
+        {
+            PhotoPath = new List<Image>();
+        }
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

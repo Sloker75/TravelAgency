@@ -1,4 +1,5 @@
 ﻿using DLL.Context;
+using DLL.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +18,14 @@ namespace BLL.Infrastructure
             serviceCollection.AddDbContext<TravelAgencyContext>(options => options.UseSqlServer(connectionString, b => b.MigrationsAssembly("travelAgency")));
 
             builder.AddEntityFrameworkStores<TravelAgencyContext>();
+
+            //Repository
+
+            builder.Services.AddTransient<UserRepository>();
+            builder.Services.AddTransient<EmployeeRepository>();
+            builder.Services.AddTransient<TourRepository>();
+            builder.Services.AddTransient<ReserveRepository>();
+
         }
     }
 }

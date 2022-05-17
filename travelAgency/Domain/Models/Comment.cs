@@ -6,6 +6,8 @@
         public string Caption { get; set; }
         public string Content { get; set; }
         public DateTime SendingTime { get; set; }
+        public int UserId { get; set; }
+        public int TourId { get; set; }
 
         public User UserComment { get; set; }
         public Tour Tour { get; set; }

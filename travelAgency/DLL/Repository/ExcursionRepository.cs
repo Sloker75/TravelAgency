@@ -19,9 +19,9 @@ namespace DLL.Repository
         }
 
         public async override Task<IReadOnlyCollection<Excursion>> FindByConditionAsync(Expression<Func<Excursion, bool>> predicat)
-            => await this.Entities.Include(x => x.Tour).Include(x => x.ShowPlaces).Where(predicat).ToListAsync().ConfigureAwait(false);
+            => await this.Entities.Include(x => x.Tour).ThenInclude(x => x.Hotel).ThenInclude(x => x.HotelAddress).Include(x => x.ShowPlaces).Where(predicat).ToListAsync().ConfigureAwait(false);
 
         public async override Task<IReadOnlyCollection<Excursion>> GetAllAsync() 
-            => await this.Entities.Include(x => x.Tour).Include(x => x.ShowPlaces).ToListAsync().ConfigureAwait(false);
+            => await this.Entities.Include(x => x.Tour).ThenInclude(x => x.Hotel).ThenInclude(x => x.HotelAddress).Include(x => x.ShowPlaces).ToListAsync().ConfigureAwait(false);
     }
 }
