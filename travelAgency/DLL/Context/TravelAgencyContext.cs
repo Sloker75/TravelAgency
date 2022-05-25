@@ -19,14 +19,15 @@ namespace DLL.Context
         public DbSet<HotelAddress> HotelAddresses { get; set; }
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<Excursion> Excursions { get; set; }
+        public DbSet<Employee> Employees { get; set; }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<User>().HasOne(x => x.Role).WithOne();
-        //    modelBuilder.Entity<Tour>().HasOne(x => x.Hotel).WithOne();
-        //    modelBuilder.Entity<HotelAddress>().HasOne(x => x.Hotel).WithOne(x => x.HotelAddress);
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>().HasOne(x => x.Employee).WithOne(x => x.User).HasForeignKey<Employee>("UserId");
+            //modelBuilder.Entity<Tour>().HasOne(x => x.Hotel).WithOne();
+            //modelBuilder.Entity<HotelAddress>().HasOne(x => x.Hotel).WithOne(x => x.HotelAddress);
 
-        //    base.OnModelCreating(modelBuilder);
-        //}
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

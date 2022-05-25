@@ -15,11 +15,16 @@ namespace BLL.Services
         private readonly TourRepository _tourRepository;
         private readonly ReserveRepository _reserveRepository;
         private readonly CommentRepository _commentRepository;
-        public TourService(TourRepository _tourRepository, ReserveRepository _reserveRepository, CommentRepository _commentRepository)
+        private readonly ExcursionRepository _excursionRepository;
+        private readonly ShowPlaceRepository _showPlaceRepository;
+        public TourService(TourRepository _tourRepository, ReserveRepository _reserveRepository,
+            CommentRepository _commentRepository, ExcursionRepository _excursionRepository, ShowPlaceRepository _showPlaceRepository)
         {
             this._tourRepository = _tourRepository;
             this._reserveRepository = _reserveRepository;
             this._commentRepository = _commentRepository;
+            this._excursionRepository = _excursionRepository;
+            this._showPlaceRepository = _showPlaceRepository;
         }
 
         public async Task AddComenntAsync(Comment comment, int tourId, int userId)
@@ -28,8 +33,20 @@ namespace BLL.Services
             await _commentRepository.AddCommentAsync(comment, tourId);
         }
 
+        public async Task AddExcursionAsync(Excursion excursion, int TourId) 
+            => await _excursionRepository.AddExcursionAsync(excursion, TourId);
+
         public async Task AddReserveAsync(string userId, int tourId)
             => await _reserveRepository.AddReserveAsync(userId, tourId);
+
+        public async Task AddShowPlaceAsync(ShowPlace showPlace, int excursionId) 
+            => await _showPlaceRepository.AddShowPlaceAsync(showPlace, excursionId);
+
+        public async Task DeleteExcursionAsync(int remExcursionId) 
+            => await _excursionRepository.DeleteExcursionAsync(remExcursionId);
+
+        public async Task DeleteShowPlaceAsync(int remShowPlaceId) 
+            => await _showPlaceRepository.DeleteShowPlaceAsync(remShowPlaceId);
 
         public async Task<IReadOnlyCollection<Tour>> FindByConditionAsync(Expression<Func<Tour, bool>> predicat)
             =>  await _tourRepository.FindByConditionAsync(predicat);

@@ -25,6 +25,9 @@ namespace BLL.Infrastructure
             builder.Services.AddTransient<EmployeeRepository>();
             builder.Services.AddTransient<TourRepository>();
             builder.Services.AddTransient<ReserveRepository>();
+            builder.Services.AddTransient<CommentRepository>();
+            builder.Services.AddTransient<ExcursionRepository>();
+            builder.Services.AddTransient<ShowPlaceRepository>();
 
         }
     }

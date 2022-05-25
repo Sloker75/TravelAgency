@@ -15,5 +15,9 @@ namespace BLL.Services.Interfaces
         Task<List<Tour>> FindByCountPeopleAsync(int countPeople);
         Task AddReserveAsync(string userId, int tourId);
         Task AddComenntAsync(Comment comment, int tourId, int userId);
+        Task AddShowPlaceAsync(ShowPlace showPlace, int excursionId);
+        Task AddExcursionAsync(Excursion excursion, int TourId);
+        Task DeleteExcursionAsync(int remExcursionId);
+        Task DeleteShowPlaceAsync(int remShowPlaceId);
     }
 }

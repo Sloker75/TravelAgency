@@ -8,8 +8,8 @@ namespace travelAgency.Infrastructure
         public static void ConfigurationService(IdentityBuilder builder)
         {
             //Services
-
             builder.Services.AddTransient<TourService>();
+            builder.Services.AddTransient<UserService>();
         }
     }
 }

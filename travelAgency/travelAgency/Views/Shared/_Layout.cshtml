@@ -9,7 +9,35 @@
     <link rel="stylesheet" href="~/travelAgency.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
+    <header class="header">
+            <div class="container">
+                <div class="container-logo">
+                    <img class="header-logo" src="https://cdn.logo.com/hotlink-ok/logo-social.png">
+                </div>
+                <div>
+                    <select class="nice-select">
+                        <optgroup label=" Tour">
+                            <option value="volvo">All</option>
+                            <option value="saab">Tours</option>
+                            <option value="saab">Hot Tours</option>
+                            <option value="saab">Hotel</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <partial name="_LoginPartial" />
+            </div>
+            <div class="header-bottom-area">
+                <ul class="menu-header-bottom-area">
+                    <li><a style="color: white;" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li><a style="color: white;" asp-controller="Tours" asp-action="Index">Tours</a></li>
+                    <li><a style="color: white;" asp-controller="Home" asp-action="Index">Hot Tours</a></li>
+                    <li><a style="color: white;" asp-controller="Home" asp-action="Index">About us</a></li>
+                    <li><a style="color: white;" asp-controller="Home" asp-action="Index">Contact</a></li>
+                </ul>
+            </div>
+        </header>
+
+    @*<header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">travelAgency</a>
@@ -30,7 +58,7 @@
                 </div>
             </div>
         </nav>
-    </header>
+    </header>*@
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()

@@ -11,11 +11,25 @@ using System.Threading.Tasks;
 
 namespace DLL.Repository
 {
-    public class ShowPlaceRepository : BaseRepository<ShowPlace>
+    public class ShowPlaceRepository : BaseRepository<ShowPlace>, IShowPlaceRepository
     {
         public ShowPlaceRepository(TravelAgencyContext _travelAgency) : base(_travelAgency)
         {
 
+        }
+
+        public async Task AddShowPlaceAsync(ShowPlace showPlace, int excursionId)
+        {
+            var excursion = base._travelAgency.Excursions.Find(excursionId);
+            excursion.ShowPlaces.Add(showPlace);
+            base._travelAgency.Entry(excursion).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            await base._travelAgency.SaveChangesAsync();
+        }
+
+        public async Task DeleteShowPlaceAsync(int remShowPlaceId)
+        {
+            Entities.Remove(Entities.Find(remShowPlaceId));
+            await base._travelAgency.SaveChangesAsync();
         }
 
         public async override Task<IReadOnlyCollection<ShowPlace>> FindByConditionAsync(Expression<Func<ShowPlace, bool>> predicat)
