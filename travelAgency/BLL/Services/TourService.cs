@@ -27,7 +27,7 @@ namespace BLL.Services
             this._showPlaceRepository = _showPlaceRepository;
         }
 
-        public async Task AddComenntAsync(Comment comment, int tourId, int userId)
+        public async Task AddComenntAsync(Comment comment, int tourId, string userId)
         {
             comment.UserId = userId;
             await _commentRepository.AddCommentAsync(comment, tourId);
@@ -39,28 +39,19 @@ namespace BLL.Services
         public async Task AddReserveAsync(string userId, int tourId)
             => await _reserveRepository.AddReserveAsync(userId, tourId);
 
-        public async Task AddShowPlaceAsync(ShowPlace showPlace, int excursionId) 
-            => await _showPlaceRepository.AddShowPlaceAsync(showPlace, excursionId);
 
         public async Task DeleteExcursionAsync(int remExcursionId) 
             => await _excursionRepository.DeleteExcursionAsync(remExcursionId);
 
-        public async Task DeleteShowPlaceAsync(int remShowPlaceId) 
-            => await _showPlaceRepository.DeleteShowPlaceAsync(remShowPlaceId);
+
+
+
 
         public async Task<IReadOnlyCollection<Tour>> FindByConditionAsync(Expression<Func<Tour, bool>> predicat)
             =>  await _tourRepository.FindByConditionAsync(predicat);
-        
-        public async Task<List<Tour>> FindByCountPeopleAsync(int countPeople) 
-            => (await _tourRepository.FindByConditionAsync(x => x.CountPeople == countPeople)).ToList();
 
-        public async Task<Tour> FindByIdAsync(int Id)
-            => (await _tourRepository.FindByConditionAsync(x => x.Id == Id)).First();
 
-        public async Task<List<Tour>> FindByTypeTransportAsync(string typeTransport)
-            => (await _tourRepository.FindByConditionAsync(x => x.TypeTransport == typeTransport)).ToList();
-
-        public async Task<List<Tour>> GetAllAsync() 
-            => (await _tourRepository.GetAllAsync()).ToList();
+        public async Task<IReadOnlyCollection<Tour>> GetAllAsync() 
+            => await _tourRepository.GetAllAsync();
     }
 }

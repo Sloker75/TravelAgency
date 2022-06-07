@@ -12,8 +12,8 @@
         public int Rating { get; set; }
         public string TypeFood { get; set; }
         public string TypeBeach { get; set; }
-        public int PhotoPathId { get; set; }
         public int HotelAddressId { get; set; }
+
 
         public List<Image> PhotoPath { get; set; }
         public HotelAddress HotelAddress { get; set; }

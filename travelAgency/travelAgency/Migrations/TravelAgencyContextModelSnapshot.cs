@@ -44,17 +44,15 @@ namespace travelAgency.Migrations
                     b.Property<int>("TourId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserCommentId")
+                    b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("TourId");
 
-                    b.HasIndex("UserCommentId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Comments");
                 });
@@ -66,9 +64,6 @@ namespace travelAgency.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("TourId")
-                        .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -104,9 +99,6 @@ namespace travelAgency.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<int>("ShowPlaceId")
-                        .HasColumnType("int");
-
                     b.Property<int>("TourId")
                         .HasColumnType("int");
 
@@ -135,9 +127,6 @@ namespace travelAgency.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PhotoPathId")
-                        .HasColumnType("int");
 
                     b.Property<int>("Rating")
                         .HasColumnType("int");
@@ -223,17 +212,15 @@ namespace travelAgency.Migrations
                     b.Property<int>("TourId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserReserveId")
+                    b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("TourId");
 
-                    b.HasIndex("UserReserveId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Reserves");
                 });
@@ -257,9 +244,6 @@ namespace travelAgency.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PhotoPathId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ExcursionId");
@@ -275,9 +259,6 @@ namespace travelAgency.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("CommentId")
-                        .HasColumnType("int");
-
                     b.Property<int>("CountPeople")
                         .HasColumnType("int");
 
@@ -288,10 +269,7 @@ namespace travelAgency.Migrations
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ExcursionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("HotelId")
+                    b.Property<int?>("HotelId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsHotTour")
@@ -301,9 +279,6 @@ namespace travelAgency.Migrations
                         .HasColumnType("float");
 
                     b.Property<int>("Rating")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ReservesId")
                         .HasColumnType("int");
 
                     b.Property<string>("TypeTransport")
@@ -531,7 +506,7 @@ namespace travelAgency.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<int>("EmployeeId")
+                    b.Property<int?>("EmployeeId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -541,9 +516,6 @@ namespace travelAgency.Migrations
                     b.Property<string>("PhotoPath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ReservesId")
-                        .HasColumnType("int");
 
                     b.HasDiscriminator().HasValue("User");
                 });
@@ -557,8 +529,10 @@ namespace travelAgency.Migrations
                         .IsRequired();
 
                     b.HasOne("Domain.Models.User", "UserComment")
-                        .WithMany()
-                        .HasForeignKey("UserCommentId");
+                        .WithMany("Comments")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Tour");
 
@@ -619,7 +593,9 @@ namespace travelAgency.Migrations
 
                     b.HasOne("Domain.Models.User", "UserReserve")
                         .WithMany("Reserves")
-                        .HasForeignKey("UserReserveId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("TourReserve");
 
@@ -647,9 +623,7 @@ namespace travelAgency.Migrations
 
                     b.HasOne("Domain.Models.Hotel", "Hotel")
                         .WithMany()
-                        .HasForeignKey("HotelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("HotelId");
 
                     b.Navigation("Employee");
 
@@ -738,6 +712,8 @@ namespace travelAgency.Migrations
 
             modelBuilder.Entity("Domain.Models.User", b =>
                 {
+                    b.Navigation("Comments");
+
                     b.Navigation("Employee")
                         .IsRequired();
 

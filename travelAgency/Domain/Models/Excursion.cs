@@ -12,7 +12,6 @@
         public double Price { get; set; }
         public DateTime ExcursionTime { get; set; }
         public int TourId { get; set; }
-        public int ShowPlaceId { get; set; }
 
         public Tour Tour { get; set; }
         public List<ShowPlace> ShowPlaces { get; set; }

@@ -28,6 +28,16 @@ namespace BLL.Services
             await _tourRepository.CreateAsync(tour);
         }
 
+        public async Task AddEmployeeAsync(string UserId)
+        {
+            await _employeeRepository.CreateAsync(new Employee() {UserId = UserId });
+        }
+
+        public async Task<Employee> GetEmployeeByUserEmailAsync(string Email)
+        {
+            return (await _employeeRepository.FindByConditionAsync(x => x.User.Email == Email)).FirstOrDefault();
+        }
+
         public async Task ChangeTourAsync(Tour newTour, int oldTourId)
             => await _tourRepository.ChangeTourAsync(newTour, oldTourId);
 
@@ -38,8 +48,8 @@ namespace BLL.Services
         public async Task DeleteTourAsync(int remTourId) 
             => await _tourRepository.DeleteTourAsync(remTourId);
 
-        public async Task<IReadOnlyCollection<Tour>> FindByConditionAsync(Expression<Func<Tour, bool>> predicat)
-            => await _tourRepository.FindByConditionAsync(predicat);
+        public async Task<IReadOnlyCollection<User>> FindByConditionAsync(Expression<Func<User, bool>> predicat)
+            => await _userRepository.FindByConditionAsync(predicat);
 
         public async Task<List<User>> GetAllUserAsync()
             => (await _userRepository.GetAllAsync()).ToList();

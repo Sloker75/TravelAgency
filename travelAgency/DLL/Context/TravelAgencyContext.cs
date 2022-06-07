@@ -24,8 +24,7 @@ namespace DLL.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasOne(x => x.Employee).WithOne(x => x.User).HasForeignKey<Employee>("UserId");
-            //modelBuilder.Entity<Tour>().HasOne(x => x.Hotel).WithOne();
-            //modelBuilder.Entity<HotelAddress>().HasOne(x => x.Hotel).WithOne(x => x.HotelAddress);
+
 
             base.OnModelCreating(modelBuilder);
         }

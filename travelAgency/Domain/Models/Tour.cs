@@ -16,10 +16,7 @@
         public int Rating { get; set; }
         public bool IsHotTour { get; set; }
         public int EmployeeId { get; set; }
-        public int CommentId { get; set; }
-        public int HotelId { get; set; }
-        public int ExcursionId { get; set; }
-        public int ReservesId { get; set; }
+        public int? HotelId { get; set; }
 
 
         public List<Comment> Comments { get; set; }

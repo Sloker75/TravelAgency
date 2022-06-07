@@ -1,0 +1,128 @@
+﻿@model Domain.Models.Tour
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Tour</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Duration)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Duration)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TypeTransport)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TypeTransport)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CountPeople)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CountPeople)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Rating)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Rating)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IsHotTour)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IsHotTour)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EmployeeId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EmployeeId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.HotelId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.HotelId)
+        </dd>
+    </dl>
+</div>
+
+<div>
+
+
+    <form asp-action="AddComment">
+        <input type="hidden" name="tourId" value="@Model.Id" />
+        @Html.TextArea("text","",5,20,new{placeholder="enter your message",@class="ComentTextArea", style="height:100%"})
+        <button style="border: none; outline: none;">Send message</button>
+    </form>
+
+    @foreach (var item in Model.Comments)
+    {
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => item.Content)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => item.Content)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => item.SendingTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => item.SendingTime)
+        </dt>
+    }
+
+    @foreach (var item in Model.Excursions)
+    {
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => item.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => item.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => item.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => item.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => item.Price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => item.Price)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => item.ExcursionTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => item.ExcursionTime)
+        </dd>
+    }
+
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Add Excursion", "AddExcursion", new {  TourId = Model.Id  }) |
+    <a asp-action="Index">Back to List</a>
+</div>

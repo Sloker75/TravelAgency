@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace travelAgency.Migrations
 {
     [DbContext(typeof(TravelAgencyContext))]
-    [Migration("20220512141726_FirstLoad")]
-    partial class FirstLoad
+    [Migration("20220606150935_UpdateDb")]
+    partial class UpdateDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,16 +46,37 @@ namespace travelAgency.Migrations
                     b.Property<int>("TourId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserCommentId")
+                    b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("TourId");
 
-                    b.HasIndex("UserCommentId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("Domain.Models.Employee", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("Domain.Models.Excursion", b =>
@@ -194,6 +215,7 @@ namespace travelAgency.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -246,17 +268,28 @@ namespace travelAgency.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("HotelId")
+                    b.Property<int>("EmployeeId")
                         .HasColumnType("int");
+
+                    b.Property<int?>("HotelId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsHotTour")
+                        .HasColumnType("bit");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
 
                     b.Property<string>("TypeTransport")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
 
                     b.HasIndex("HotelId");
 
@@ -475,6 +508,9 @@ namespace travelAgency.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
+                    b.Property<int?>("EmployeeId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -495,12 +531,25 @@ namespace travelAgency.Migrations
                         .IsRequired();
 
                     b.HasOne("Domain.Models.User", "UserComment")
-                        .WithMany()
-                        .HasForeignKey("UserCommentId");
+                        .WithMany("Comments")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Tour");
 
                     b.Navigation("UserComment");
+                });
+
+            modelBuilder.Entity("Domain.Models.Employee", b =>
+                {
+                    b.HasOne("Domain.Models.User", "User")
+                        .WithOne("Employee")
+                        .HasForeignKey("Domain.Models.Employee", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Models.Excursion", b =>
@@ -538,19 +587,21 @@ namespace travelAgency.Migrations
 
             modelBuilder.Entity("Domain.Models.Reserve", b =>
                 {
-                    b.HasOne("Domain.Models.Tour", "Tour")
+                    b.HasOne("Domain.Models.Tour", "TourReserve")
                         .WithMany("Reserves")
                         .HasForeignKey("TourId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Models.User", "User")
+                    b.HasOne("Domain.Models.User", "UserReserve")
                         .WithMany("Reserves")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Tour");
+                    b.Navigation("TourReserve");
 
-                    b.Navigation("User");
+                    b.Navigation("UserReserve");
                 });
 
             modelBuilder.Entity("Domain.Models.ShowPlace", b =>
@@ -566,11 +617,17 @@ namespace travelAgency.Migrations
 
             modelBuilder.Entity("Domain.Models.Tour", b =>
                 {
-                    b.HasOne("Domain.Models.Hotel", "Hotel")
-                        .WithMany()
-                        .HasForeignKey("HotelId")
+                    b.HasOne("Domain.Models.Employee", "Employee")
+                        .WithMany("Tours")
+                        .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Domain.Models.Hotel", "Hotel")
+                        .WithMany()
+                        .HasForeignKey("HotelId");
+
+                    b.Navigation("Employee");
 
                     b.Navigation("Hotel");
                 });
@@ -626,6 +683,11 @@ namespace travelAgency.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Domain.Models.Employee", b =>
+                {
+                    b.Navigation("Tours");
+                });
+
             modelBuilder.Entity("Domain.Models.Excursion", b =>
                 {
                     b.Navigation("ShowPlaces");
@@ -652,6 +714,11 @@ namespace travelAgency.Migrations
 
             modelBuilder.Entity("Domain.Models.User", b =>
                 {
+                    b.Navigation("Comments");
+
+                    b.Navigation("Employee")
+                        .IsRequired();
+
                     b.Navigation("Reserves");
                 });
 #pragma warning restore 612, 618

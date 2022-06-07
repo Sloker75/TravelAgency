@@ -9,15 +9,10 @@ namespace BLL.Services.Interfaces
 {
     public interface ITourService
     {
-        Task<List<Tour>> GetAllAsync();
-        Task<Tour> FindByIdAsync(int Id);
-        Task<List<Tour>> FindByTypeTransportAsync(string typeTransport);
-        Task<List<Tour>> FindByCountPeopleAsync(int countPeople);
+        Task<IReadOnlyCollection<Tour>> GetAllAsync();
         Task AddReserveAsync(string userId, int tourId);
-        Task AddComenntAsync(Comment comment, int tourId, int userId);
-        Task AddShowPlaceAsync(ShowPlace showPlace, int excursionId);
+        Task AddComenntAsync(Comment comment, int tourId, string userId);
         Task AddExcursionAsync(Excursion excursion, int TourId);
         Task DeleteExcursionAsync(int remExcursionId);
-        Task DeleteShowPlaceAsync(int remShowPlaceId);
     }
 }

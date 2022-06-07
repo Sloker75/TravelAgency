@@ -3,17 +3,16 @@ using Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using DLL.Context;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using travelAgency.Services;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("TravelAgencyContextConnection") ?? throw new InvalidOperationException("Connection string 'TravelAgencyContextConnection' not found.");
 
-builder.Services.AddDbContext<TravelAgencyContext>(options =>
-    options.UseSqlServer(connectionString));;
+builder.Host.UseSerilog((hostingContext, services, configuration) => {
+    configuration.WriteTo.File(builder.Environment.WebRootPath+"/Log.txt");
+});
 
-builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<TravelAgencyContext>();;
-
-// Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 
@@ -22,6 +21,9 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 var identityBuilder = builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true);
 
 BLL.Infrastructure.Configuration.ConfigurationService(builder.Services, connectionString, identityBuilder);
+
+builder.Services.AddTransient<IEmailSender, SendGridEmailSender>();
+
 travelAgency.Infrastructure.Configuration.ConfigurationService(identityBuilder);
 
 builder.Services.AddControllersWithViews();

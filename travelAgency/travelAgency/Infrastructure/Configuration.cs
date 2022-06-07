@@ -10,6 +10,7 @@ namespace travelAgency.Infrastructure
             //Services
             builder.Services.AddTransient<TourService>();
             builder.Services.AddTransient<UserService>();
+            builder.Services.AddTransient<ExcursionService>(); 
         }
     }
 }

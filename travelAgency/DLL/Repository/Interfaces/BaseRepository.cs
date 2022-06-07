@@ -32,6 +32,7 @@ namespace DLL.Repository.Interfaces
             try
             {
                 await this.Entities.AddAsync(entity).ConfigureAwait(false);
+                await this._travelAgency.SaveChangesAsync();
                 return new OperationDetail() { Text = "Created", IsCompleted = true};
             }
             catch (Exception ex)

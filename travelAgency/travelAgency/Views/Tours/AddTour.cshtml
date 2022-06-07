@@ -1,0 +1,99 @@
+﻿@model Domain.Models.ViewModels.TourViewModel
+
+@{
+    ViewData["Title"] = "AddTour";
+}
+
+<h1>AddTour</h1>
+
+<h4>TourViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddTour" >
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Duration" class="control-label"></label>
+                <input asp-for="Duration" class="form-control" />
+                <span asp-validation-for="Duration" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TypeTransport" class="control-label"></label>
+                <input asp-for="TypeTransport" class="form-control" />
+                <span asp-validation-for="TypeTransport" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CountPeople" class="control-label"></label>
+                <input asp-for="CountPeople" class="form-control" />
+                <span asp-validation-for="CountPeople" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TourRating" class="control-label"></label>
+                <input asp-for="TourRating" class="form-control" />
+                <span asp-validation-for="TourRating" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsHotTour" /> @Html.DisplayNameFor(model => model.IsHotTour)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HotelRating" class="control-label"></label>
+                <input asp-for="HotelRating" class="form-control" />
+                <span asp-validation-for="HotelRating" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TypeFood" class="control-label"></label>
+                <input asp-for="TypeFood" class="form-control" />
+                <span asp-validation-for="TypeFood" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TypeBeach" class="control-label"></label>
+                <input asp-for="TypeBeach" class="form-control" />
+                <span asp-validation-for="TypeBeach" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Country" class="control-label"></label>
+                <input asp-for="Country" class="form-control" />
+                <span asp-validation-for="Country" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="City" class="control-label"></label>
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Street" class="control-label"></label>
+                <input asp-for="Street" class="form-control" />
+                <span asp-validation-for="Street" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @*<input type = "hidden" value="@Model.id"/>*@
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
